@@ -1,0 +1,22 @@
+<form action="/user/update" method="post">
+<label for="name">Change user name</label>
+<input type="text" name="name" id="name" value="<?php echo $user->name ?>">
+<br>
+<label for="email">Change user mail</label>
+<input type="email" name="email" id="email" value="<?php echo $user->email ?>">
+<br>
+<label for="pass">Change user password</label>
+<input type="password" name="pass" id="pass">
+<br>
+<label for="pass">Insert user password again</label>
+<input type="password" name="passag" id="passag">
+<br>
+<input type="submit" value="Change">
+<input type="hidden" name="id" value="<?php echo $user->id ?>">
+</form>
+
+<?php
+if(isset($msg)){
+    echo $msg;
+}
+?>

@@ -1,0 +1,14 @@
+<form action="/pic/upload" method="post" enctype="multipart/form-data">
+<label for="name">Picture name</label>
+<input type="text" name="name" id="name">
+<br>
+<input type="file" name="pic" id="pic" accept=".png, .jpg, .jpeg">
+<br>
+<input type="submit" value="Upload image">
+<input type="hidden" name="id" value="<?php echo $_SESSION['user']->id ?>">
+</form>
+<?php
+if(isset($msg)){
+    echo $msg;
+}
+?>

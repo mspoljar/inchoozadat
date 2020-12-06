@@ -5,8 +5,14 @@
     </div>
     <div class="col-sm"></div>
       <div class="col-sm">
+      <?php if(isset($_SESSION['user'])):  ?>
+          <a href="/managment/index?id=<?php echo $_SESSION['user']->id ?>">Managment</a>
+          <a href="/user/index?id=<?php echo $_SESSION['user']->id ?>">My Account</a>
+          <a href="/index/logout">Logout</a>
+      <?php else:  ?>
           <a href="/index/login">Login</a>
           <a href="/index/register">Register</a>
+      <?php endif ?>
       </div>
   </div>
 </div>

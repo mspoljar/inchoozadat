@@ -1,0 +1,11 @@
+welcome <?php echo $user->name;  ?>
+<br>
+<a href="/pic/index">Upload image</a>
+<br>
+<div class="container">
+<?php foreach($images as $image): ?>
+<div class="row">
+<img src="<?php echo App::config('url'); ?>public/images/<?php echo $image->picpath; ?>.jpg" width="200" alt="">
+</div>
+<?php endforeach ?>
+</div>
