@@ -25,4 +25,11 @@ class PicController extends AuthorizationController
           header('location: /managment/index?id=' . $_SESSION['user']->id);          
 
     }
+
+    public function delete()
+    {
+      Pic::delete();
+      header('location: /managment/index?id=' . $_SESSION['user']->id);
+    }
+
 }

@@ -1,4 +1,4 @@
-welcome <?php echo $user->name;  ?>
+welcome <?php echo $user->name  ?>
 <br>
 <a href="/pic/index">Upload image</a>
 <br>
@@ -6,6 +6,13 @@ welcome <?php echo $user->name;  ?>
 <?php foreach($images as $image): ?>
 <div class="row">
 <img src="<?php echo App::config('url'); ?>public/images/<?php echo $image->picpath; ?>.jpg" width="200" alt="">
+<h3><?php echo $image->name ?></h3>
+<br>
+<?php if($image->user_id === $user->id): ?>
+    <div class="col-sm">
+        <a onclick="return confirm('Are you sure you want to delete the picture?')" href="/pic/delete?id=<?php echo $image->id ?>">Delete</a>
+     </div>
+<?php endif ?>
 </div>
 <?php endforeach ?>
 </div>

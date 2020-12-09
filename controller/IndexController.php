@@ -4,16 +4,39 @@ class IndexController extends Controller
 {
 public function index()
 {
+    
+    if(isset($_SESSION['user'])){
+        $this->view->render('home');
+    }elseif(isset($_COOKIE['rememberme'])){
+        $uid=User::decryptCookie($_COOKIE['rememberme']);
+        $con=DB::getInstance();
+        $data=$con->prepare('select * from user where id=:id');
+        $data->execute(['id'=>$uid]);
+        $result=$data->fetch();
+        $_SESSION['user']=$result;
+        header('location: /managment/index?id='. $result->id);
+    }else{
     $this->view->render('home');
+    }
 }
 
 public function login()
 {
+    if(isset($_COOKIE['rememberme'])){
+        $uid=User::decryptCookie($_COOKIE['rememberme']);
+        $con=DB::getInstance();
+        $data=$con->prepare('select * from user where id=:id');
+        $data->execute(['id'=>$uid]);
+        $result=$data->fetch();
+        $this->view->render('login',['user'=>$result]);
+    }else{
     $this->view->render('login');
+    }
 }
 
 public function authorization()
 {
+
     if(!isset($_POST['email']) || !isset($_POST['pass'])){
         $this->view->render('login',[
             'msg'=>'Login info is not set'
@@ -46,11 +69,18 @@ public function authorization()
         ]);
         return;
     }
+    
 
     unset($result->pass);
     $_SESSION['user']=$result;
+    if(isset($_POST['rememberme'])){
+        $value=User::encryptCookie($_SESSION['user']->id);
+        setcookie('rememberme',$value,time()+60*60*24*30);
+    }
     $man=new ManagmentController();
-    $man->index();
+    header('location: /');
+
+    
 }
 
 public function register()
@@ -77,5 +107,13 @@ public function test()
         'test'=>$test
     ]);
 }
+
+public function picnumber()
+    {
+      header('Content-Type: application/json');
+       echo json_encode(Pic::count());
+      // echo json_encode('JBT');
+    }
+
 }
 

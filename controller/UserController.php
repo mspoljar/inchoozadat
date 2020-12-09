@@ -37,4 +37,17 @@ class UserController extends AuthorizationController
         ]);
             */
     }
+
+    public function delete()
+    {
+        $imgs=User::deletepic();
+        foreach($imgs as $img){
+            unlink(BP . 'public' . DIRECTORY_SEPARATOR
+        . 'images' . DIRECTORY_SEPARATOR .
+        $img->picpath . '.jpg');}
+        User::delete();
+        unset($_SESSION['user']);
+        session_destroy();
+        header('location: /');
+    }
 }
